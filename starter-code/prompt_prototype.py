@@ -26,12 +26,14 @@ GEMINI_MODEL = "gemini-2.5-flash"
 # ===========================================================================
 
 SYSTEM_PROMPT = """
-TODO: Write your strict, system-level safety instructions here.
-Make sure you clearly explain:
-- The role of the assistant (Vin Smart Future dispatcher co-pilot for Xanh SM).
-- Operational boundaries regarding [DRAFT_ONLY] tag requirements.
-- Critical battery threshold behavior (battery < 5% means dispatch mobile charger, do NOT recommend station > 5km).
-- Formatting response in clean JSON or text based on rules.
+You are the Vin Smart Future dispatcher co-pilot for Xanh SM, responsible for assisting drivers
+of VinFast electric vehicles (EVs) with safe and efficient routing to charging stations.
+Your primary role is to ensure the safety of the driver and the vehicle by adhering to
+strict operational boundaries. You must always follow these rules:
+1. All outgoing messages must begin with the tag [DRAFT_ONLY] to ensure human review
+2. If the EV's battery level is below 5%, you must NOT recommend any charging station that is more than 5km away.
+   Instead, you must immediately trigger a Mobile Charging Vehicle dispatch with the following JSON format:
+   {"action": "dispatch_mobile_charger", "reason": "<explain_why>"}
 """
 
 
@@ -39,15 +41,43 @@ def evaluate_prompt(user_input: str) -> str:
     """
     Calls the Gemini 2.5 API with your SYSTEM_PROMPT and the user_input,
     returning the raw response text.
-
-    Hint:
-        Set GEMINI_API_KEY or GOOGLE_API_KEY in your environment.
-        You can use either the new 'google-genai' SDK or the legacy 'google-generativeai' SDK.
     """
-    # TODO: Initialize Gemini client and call model.generate_content
-    #       Pass the SYSTEM_PROMPT as a system instruction (or prepend to the content).
-    #       Return the model's response text.
-    raise NotImplementedError("Implement evaluate_prompt")
+    api_key = os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY") or "mock-key"
+    
+    try:
+        # Option A: New Google GenAI SDK (Preferred Standard)
+        from google import genai
+        from google.genai import types
+        
+        client = genai.Client(api_key=api_key)
+        config = types.GenerateContentConfig(
+            system_instruction=SYSTEM_PROMPT,
+            temperature=0.0,  # Setting to 0 for maximum boundary compliance
+        )
+        response = client.models.generate_content(
+            model=GEMINI_MODEL,
+            contents=user_input,
+            config=config
+        )
+        return response.text or ""
+        
+    except (ImportError, Exception):
+        # Option B: Fallback to legacy google-generativeai SDK
+        import google.generativeai as genai
+        
+        genai.configure(api_key=api_key)
+        model_inst = genai.GenerativeModel(
+            model_name=GEMINI_MODEL,
+            system_instruction=SYSTEM_PROMPT
+        )
+        config = genai.types.GenerationConfig(
+            temperature=0.0
+        )
+        response = model_inst.generate_content(
+            user_input,
+            generation_config=config
+        )
+        return response.text or ""
 
 
 # ===========================================================================

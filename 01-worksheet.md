@@ -63,11 +63,11 @@ Hãy sử dụng **4 Lenses** dưới đây để quét qua hoạt động vận
 ### 📝 List bài toán của tôi:
 | # | Subsidiary (VinFast/Xanh SM...) | Lens | Mô tả ngắn bài toán |
 |---|----------------------------------|------|---------------------|
-| 1 | | | |
-| 2 | | | |
-| 3 | | | |
-| 4 | | | |
-| 5 | | | |
+| 1 |Vinfast - Xử lý hồ sơ và chuẩn đoán bảo hành |Lặp lại & Tốn thời gian | Kỹ thuật viên kiểm định phải ghi lỗi vào giấy hoặc văn bản tự do. Sau đó phải mang vào hệ thống gõ lại để tạo yêu cầu bảo hành |
+| 2 | Xanh SM: Điều phối xe chạy rỗng và dự báo điểm nóng nhu cầu | Pain từ người khác | Tài xế thường phải chạy xe rỗng vòng quanh hoặc dựa vào bản đồ nhiệt (heatmap) có tính chất phản ứng (reactive) |
+| 3 | Vinhomes: Phân luồng và chẩn đoán yêu cầu bảo trì của cư dân | Lặp lại & Tốn thời gian | Cư dân gửi ảnh hoặc tin nhắn phản ánh sự cố (rò nước, hỏng điều hòa, nứt tường) qua ứng dụng Vinhomes. Nhân viên Ban quản lý phải đọc từng tin, xác định loại lỗi, đánh giá mức độ khẩn cấp và gọi điện/nhắn tin gán việc cho nhà thầu kỹ thuật phù hợp. |
+| 4 | Vinmec: Mã hóa hồ sơ bệnh án và đối soát thanh toán bảo hiểm | Tốn thời gian | Bác sĩ nhập hồ sơ bệnh án bằng văn bản tự do (free-text). Sau đó, nhân viên mã hóa y tế phải đọc lại toàn bộ để chuyển đổi thủ công sang hệ thống mã bệnh quốc tế (ICD-10) phục vụ việc thanh toán bảo hiểm. |
+| 5 | Vinpearl/VinWonders: Cá nhân hóa hành trình khách hàng theo thời gian thực | AI có thể tốt hơn | Chatbot hiện tại hoạt động theo kịch bản có sẵn (rule-based). Trải nghiệm tại công viên phụ thuộc vào việc khách tự xem bản đồ tĩnh, tự tìm nhà hàng và tự mua vé các dịch vụ gia tăng. |
 
 ---
 
@@ -77,24 +77,63 @@ Chọn **top 3 bài toán** từ danh sách trên và hoàn thiện **3 Quick Pr
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│ QUICK PROBLEM CARD #___                                     │
+│ QUICK PROBLEM CARD #_1__                                     │
 │                                                             │
-│ Bài toán (1 câu): ________________________________________  │
-│ Công ty thành viên: [ ] VinFast  [ ] Xanh SM  [ ] Vinhomes  │
-│                     [ ] Vinmec   [ ] Khác (Ghi rõ)________  │
+│ Bài toán (1 câu): __Điều phối xe rỗng và dự báo điểm nóng nhu cầu____  │
+│ Công ty thành viên: [] VinFast  [v] Xanh SM  [ ] Vinhomes  │
+│                     [ ] Vinmec   [ ] Khác (Ghi rõ)___  │
 │                                                             │
-│ Ai đang đau (Actor)? ______________________________________ │
+│ Ai đang đau (Actor)? ____Tài xế các vùng ít khách_ │
 │                                                             │
 │ Workflow thủ công hiện tại (3-5 bước):                      │
-│   1. ___ ──> 2. ___ ──> 3. ___ ──> 4. ___                   │
+│   1. _Trả khách ở khu vực vắng vẻ_ ──> 2. __Mở app xem bản đồ nhiệt_ ──> 3. _Tài xế chạy xe rỗng về khu vực đó__ ──> 4. __Đậu xe lề đường đợi cuốc mới_                   │
 │                                                             │
-│ Bước nào tốn thời gian/lỗi nhất? ___ (⏱ ___ phút/lượt)      │
-│ AI có thể nhảy vào hỗ trợ ở bước nào? _____________________ │
+│ Bước nào tốn thời gian/lỗi nhất? __Chạy xe rỗng_ (⏱ _20 - 40__ phút/lượt)      │
+│ AI có thể nhảy vào hỗ trợ ở bước nào? _AI dự báo (Predictive AI) thay thế bản đồ nhiệt tĩnh bằng luồng gợi ý điều hướng: Chỉ định đích danh tọa độ nên di chuyển tới dựa trên dữ liệu lịch sử, thời tiết và sự kiện sắp diễn ra.______ │
 │                                                             │
-│ Đo thành công bằng gì (Metric có số)? ______________________ │
+│ Đo thành công bằng gì (Metric có số)? _____________Giảm tỷ lệ chạy rỗng (deadhead miles) từ 35% ──> dưới 15%; Giảm thời gian chờ cuốc từ 30 min ──> under 10 min_________ │
 │   VD: "Giảm thời gian soạn phản hồi từ 10 min ──> under 2 min"│
 │                                                             │
-│ Quick Architecture: [ ] No AI  [ ] Rule  [ ] LLM  [ ] Agent │
+│ Quick Architecture: [ ] No AI  [ ] Rule  [ ] LLM  [v] Agent │
+└─────────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────────┐
+│ QUICK PROBLEM CARD #_2__                                    │
+│                                                             │
+│ Bài toán (1 câu): Xử lý hồ sơ chẩn đoán lỗi & bảo hành      │
+│ Công ty thành viên: [v] VinFast  [ ] Xanh SM  [ ] Vinhomes  │
+│                     [ ] Vinmec   [ ] Khác (Ghi rõ)________  │
+│                                                             │
+│ Ai đang đau (Actor)? Kỹ thuật viên & Cố vấn dịch vụ xưởng   │
+│                                                             │
+│ Workflow thủ công hiện tại (3-5 bước):                      │
+│   1. KTV kiểm tra xe ──> 2. Ghi chú lỗi ra giấy/text tự do ──> 3. CVDV đối chiếu sổ tay ──> 4. Nhập tay vào DMS tạo yêu cầu │
+│                                                             │
+│ Bước nào tốn thời gian/lỗi nhất? Nhập liệu & đối chiếu mã (⏱ 15 - 25 phút/lượt)      │
+│ AI có thể nhảy vào hỗ trợ ở bước nào? Dùng AI Speech-to-Text để KTV đọc bệnh, kết hợp NLP bóc tách thực thể (NER) tự động điền form bảo hành và đối khớp mã linh kiện. │
+│                                                             │
+│ Đo thành công bằng gì (Metric có số)? Giảm thời gian tạo hồ sơ bảo hành từ 20 phút ──> dưới 5 phút/lượt xe. │
+│                                                             │
+│ Quick Architecture: [ ] No AI  [ ] Rule  [v] LLM  [ ] Agent │
+└─────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────┐
+│ QUICK PROBLEM CARD #_3__                                    │
+│                                                             │
+│ Bài toán (1 câu): Phân luồng & chẩn đoán yêu cầu bảo trì    │
+│ Công ty thành viên: [ ] VinFast  [ ] Xanh SM  [v] Vinhomes  │
+│                     [ ] Vinmec   [ ] Khác (Ghi rõ)________  │
+│                                                             │
+│ Ai đang đau (Actor)? Ban quản lý tòa nhà & Cư dân           │
+│                                                             │
+│ Workflow thủ công hiện tại (3-5 bước):                      │
+│   1. Cư dân gửi ảnh/tin nhắn báo lỗi app ──> 2. BQL đọc/xem thủ công ──> 3. Phân loại lỗi/độ khẩn cấp ──> 4. Gọi/nhắn báo thợ kỹ thuật │
+│                                                             │
+│ Bước nào tốn thời gian/lỗi nhất? Đọc, chẩn đoán & điều phối (⏱ 2 - 4 giờ/lượt trễ)   │
+│ AI có thể nhảy vào hỗ trợ ở bước nào? Dùng Vision AI phân tích ảnh và LLM đọc hiểu tin nhắn để chẩn đoán sơ bộ, phân loại ưu tiên (Triage) và tự động tạo ticket bắn thẳng cho thợ chuyên trách. │
+│                                                             │
+│ Đo thành công bằng gì (Metric có số)? Giảm thời gian tiếp nhận & phân luồng từ 2-4 giờ ──> dưới 5 phút; Giảm tỷ lệ điều nhầm thợ (15% ──> < 2%). │
+│                                                             │
+│ Quick Architecture: [ ] No AI  [ ] Rule  [v] LLM  [ ] Agent │
 └─────────────────────────────────────────────────────────────┘
 ```
 
