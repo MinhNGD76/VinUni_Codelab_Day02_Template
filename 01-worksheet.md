@@ -63,11 +63,11 @@ Hãy sử dụng **4 Lenses** dưới đây để quét qua hoạt động vận
 ### 📝 List bài toán của tôi:
 | # | Subsidiary (VinFast/Xanh SM...) | Lens | Mô tả ngắn bài toán |
 |---|----------------------------------|------|---------------------|
-| 1 |Vinfast - Xử lý hồ sơ và chuẩn đoán bảo hành |Lặp lại & Tốn thời gian | Kỹ thuật viên kiểm định phải ghi lỗi vào giấy hoặc văn bản tự do. Sau đó phải mang vào hệ thống gõ lại để tạo yêu cầu bảo hành |
-| 2 | Xanh SM: Điều phối xe chạy rỗng và dự báo điểm nóng nhu cầu | Pain từ người khác | Tài xế thường phải chạy xe rỗng vòng quanh hoặc dựa vào bản đồ nhiệt (heatmap) có tính chất phản ứng (reactive) |
-| 3 | Vinhomes: Phân luồng và chẩn đoán yêu cầu bảo trì của cư dân | Lặp lại & Tốn thời gian | Cư dân gửi ảnh hoặc tin nhắn phản ánh sự cố (rò nước, hỏng điều hòa, nứt tường) qua ứng dụng Vinhomes. Nhân viên Ban quản lý phải đọc từng tin, xác định loại lỗi, đánh giá mức độ khẩn cấp và gọi điện/nhắn tin gán việc cho nhà thầu kỹ thuật phù hợp. |
-| 4 | Vinmec: Mã hóa hồ sơ bệnh án và đối soát thanh toán bảo hiểm | Tốn thời gian | Bác sĩ nhập hồ sơ bệnh án bằng văn bản tự do (free-text). Sau đó, nhân viên mã hóa y tế phải đọc lại toàn bộ để chuyển đổi thủ công sang hệ thống mã bệnh quốc tế (ICD-10) phục vụ việc thanh toán bảo hiểm. |
-| 5 | Vinpearl/VinWonders: Cá nhân hóa hành trình khách hàng theo thời gian thực | AI có thể tốt hơn | Chatbot hiện tại hoạt động theo kịch bản có sẵn (rule-based). Trải nghiệm tại công viên phụ thuộc vào việc khách tự xem bản đồ tĩnh, tự tìm nhà hàng và tự mua vé các dịch vụ gia tăng. |
+| 1 | Xanh SM | Repetitive | Tài xế và điều phối viên mất nhiều thời gian phân bổ lại tuyến xe khi có yêu cầu đặt xe mới hoặc hủy chuyến đột ngột trong giờ cao điểm. |
+| 2 | Xanh SM | Time-consuming | Soạn và phản hồi tin nhắn/điểm đón cho khách hàng thủ công làm chậm SLA và tăng sai lệch thông tin. |
+| 3 | VinFast | AI-upgrade | Chủ xe EV cần gợi ý trạm sạc phù hợp theo mức pin, khoảng cách và thời gian chờ, nhưng hiện tại quy trình tìm kiếm còn thủ công và thiếu hướng dẫn chủ động. |
+| 4 | Vinmec | Stakeholder Pain | Nhân viên tiếp nhận bệnh nhân và bác sĩ dành thời gian lớn để phân loại hồ sơ, lên lịch khám, và xử lý yêu cầu bệnh nhân theo dạng tự do. |
+| 5 | Vinhomes | Time-consuming | Nhân viên hỗ trợ cư dân xử lý nhiều ticket/đơn khác nhau (bảo trì, an ninh, tiện ích) mà phải đọc thủ công và phân loại theo từng nhóm. |
 
 ---
 
@@ -77,70 +77,95 @@ Chọn **top 3 bài toán** từ danh sách trên và hoàn thiện **3 Quick Pr
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│ QUICK PROBLEM CARD #_1__                                     │
+│ QUICK PROBLEM CARD #1                                       │
 │                                                             │
-│ Bài toán (1 câu): __Điều phối xe rỗng và dự báo điểm nóng nhu cầu____  │
-│ Công ty thành viên: [] VinFast  [v] Xanh SM  [ ] Vinhomes  │
-│                     [ ] Vinmec   [ ] Khác (Ghi rõ)___  │
-│                                                             │
-│ Ai đang đau (Actor)? ____Tài xế các vùng ít khách_ │
-│                                                             │
-│ Workflow thủ công hiện tại (3-5 bước):                      │
-│   1. _Trả khách ở khu vực vắng vẻ_ ──> 2. __Mở app xem bản đồ nhiệt_ ──> 3. _Tài xế chạy xe rỗng về khu vực đó__ ──> 4. __Đậu xe lề đường đợi cuốc mới_                   │
-│                                                             │
-│ Bước nào tốn thời gian/lỗi nhất? __Chạy xe rỗng_ (⏱ _20 - 40__ phút/lượt)      │
-│ AI có thể nhảy vào hỗ trợ ở bước nào? _AI dự báo (Predictive AI) thay thế bản đồ nhiệt tĩnh bằng luồng gợi ý điều hướng: Chỉ định đích danh tọa độ nên di chuyển tới dựa trên dữ liệu lịch sử, thời tiết và sự kiện sắp diễn ra.______ │
-│                                                             │
-│ Đo thành công bằng gì (Metric có số)? _____________Giảm tỷ lệ chạy rỗng (deadhead miles) từ 35% ──> dưới 15%; Giảm thời gian chờ cuốc từ 30 min ──> under 10 min_________ │
-│   VD: "Giảm thời gian soạn phản hồi từ 10 min ──> under 2 min"│
-│                                                             │
-│ Quick Architecture: [ ] No AI  [ ] Rule  [ ] LLM  [v] Agent │
-└─────────────────────────────────────────────────────────────┘
-┌─────────────────────────────────────────────────────────────┐
-│ QUICK PROBLEM CARD #_2__                                    │
-│                                                             │
-│ Bài toán (1 câu): Xử lý hồ sơ chẩn đoán lỗi & bảo hành      │
-│ Công ty thành viên: [v] VinFast  [ ] Xanh SM  [ ] Vinhomes  │
+│ Bài toán (1 câu): Xanh SM cần tự động gợi ý lộ trình và  │
+│ phân bổ tài xế hợp lý khi có đơn đặt xe và hủy chuyến đột ngột. │
+│ Công ty thành viên: [x] Xanh SM  [ ] VinFast  [ ] Vinhomes │
 │                     [ ] Vinmec   [ ] Khác (Ghi rõ)________  │
 │                                                             │
-│ Ai đang đau (Actor)? Kỹ thuật viên & Cố vấn dịch vụ xưởng   │
+│ Ai đang đau (Actor)? Điều phối viên vận hành và tài xế Xanh SM │
 │                                                             │
 │ Workflow thủ công hiện tại (3-5 bước):                      │
-│   1. KTV kiểm tra xe ──> 2. Ghi chú lỗi ra giấy/text tự do ──> 3. CVDV đối chiếu sổ tay ──> 4. Nhập tay vào DMS tạo yêu cầu │
+│   1. Nhận đơn đặt xe mới ──> 2. Chọn tài xế gần nhất ──> 3. Gửi │
+│      lộ trình và xác nhận ──> 4. Xử lý hủy/đổi chỗ khi có xung  │
+│      đột ──> 5. Theo dõi lại SLA và tình trạng xe             │
 │                                                             │
-│ Bước nào tốn thời gian/lỗi nhất? Nhập liệu & đối chiếu mã (⏱ 15 - 25 phút/lượt)      │
-│ AI có thể nhảy vào hỗ trợ ở bước nào? Dùng AI Speech-to-Text để KTV đọc bệnh, kết hợp NLP bóc tách thực thể (NER) tự động điền form bảo hành và đối khớp mã linh kiện. │
+│ Bước nào tốn thời gian/lỗi nhất? Dòng xe bị xung đột và phải │
+│ tái sắp xếp tay, mất 8-15 phút/lượt.                       │
+│ AI có thể nhảy vào hỗ trợ ở bước nào? Gợi ý tài xế thay thế, │
+│ tối ưu khoảng cách, cảnh báo rủi ro trễ.                     │
 │                                                             │
-│ Đo thành công bằng gì (Metric có số)? Giảm thời gian tạo hồ sơ bảo hành từ 20 phút ──> dưới 5 phút/lượt xe. │
+│ Đo thành công bằng gì (Metric có số)? Giảm 30% thời gian xử │
+│ lý chuyến, giảm 20% số trip trễ, và tăng 15% tỷ lệ hoàn thành  │
+│ lời hứa SLA.                                                │
 │                                                             │
-│ Quick Architecture: [ ] No AI  [ ] Rule  [v] LLM  [ ] Agent │
+│ Quick Architecture: [ ] No AI  [ ] Rule  [x] LLM  [ ] Agent │
 └─────────────────────────────────────────────────────────────┘
+```
 
+```
 ┌─────────────────────────────────────────────────────────────┐
-│ QUICK PROBLEM CARD #_3__                                    │
+│ QUICK PROBLEM CARD #2                                       │
 │                                                             │
-│ Bài toán (1 câu): Phân luồng & chẩn đoán yêu cầu bảo trì    │
-│ Công ty thành viên: [ ] VinFast  [ ] Xanh SM  [v] Vinhomes  │
+│ Bài toán (1 câu): VinFast cần gợi ý trạm sạc tối ưu theo mức │
+│ pin, khoảng cách và thời gian chờ để hỗ trợ chủ xe EV an toàn. │
+│ Công ty thành viên: [ ] Xanh SM  [x] VinFast  [ ] Vinhomes │
 │                     [ ] Vinmec   [ ] Khác (Ghi rõ)________  │
 │                                                             │
-│ Ai đang đau (Actor)? Ban quản lý tòa nhà & Cư dân           │
+│ Ai đang đau (Actor)? Chủ xe EV và nhân viên hỗ trợ khách hàng │
 │                                                             │
 │ Workflow thủ công hiện tại (3-5 bước):                      │
-│   1. Cư dân gửi ảnh/tin nhắn báo lỗi app ──> 2. BQL đọc/xem thủ công ──> 3. Phân loại lỗi/độ khẩn cấp ──> 4. Gọi/nhắn báo thợ kỹ thuật │
+│   1. Khách hàng báo pin thấp hoặc cần sạc ──> 2. Kiểm tra vị trí │
+│      và mức pin ──> 3. Xem các trạm sạc gần nhất ──> 4. So sánh │
+│      thời gian chờ, quãng đường và chi phí ──> 5. Gửi tin nhắn hướng │
+│      dẫn                                                       │
 │                                                             │
-│ Bước nào tốn thời gian/lỗi nhất? Đọc, chẩn đoán & điều phối (⏱ 2 - 4 giờ/lượt trễ)   │
-│ AI có thể nhảy vào hỗ trợ ở bước nào? Dùng Vision AI phân tích ảnh và LLM đọc hiểu tin nhắn để chẩn đoán sơ bộ, phân loại ưu tiên (Triage) và tự động tạo ticket bắn thẳng cho thợ chuyên trách. │
+│ Bước nào tốn thời gian/lỗi nhất? So sánh kỹ lưỡng nhiều trạm sạc có │
+│ thể mất 5-10 phút và dễ chọn sai nếu pin ở mức nguy hiểm.    │
+│ AI có thể nhảy vào hỗ trợ ở bước nào? Tự động chọn trạm an toàn, │
+│ ưu tiên biến cảnh báo pin thấp và đề xuất hành động khẩn cấp. │
 │                                                             │
-│ Đo thành công bằng gì (Metric có số)? Giảm thời gian tiếp nhận & phân luồng từ 2-4 giờ ──> dưới 5 phút; Giảm tỷ lệ điều nhầm thợ (15% ──> < 2%). │
+│ Đo thành công bằng gì (Metric có số)? Giảm 50% thời gian tư vấn,
+│ tăng tỷ lệ khách hàng chọn trạm sạc phù hợp lên 90%, và giảm số vụ │
+│ pin cực thấp dẫn đến hỏng chuyến.                           │
 │                                                             │
-│ Quick Architecture: [ ] No AI  [ ] Rule  [v] LLM  [ ] Agent │
+│ Quick Architecture: [ ] No AI  [x] Rule  [ ] LLM  [ ] Agent │
+└─────────────────────────────────────────────────────────────┘
+```
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│ QUICK PROBLEM CARD #3                                       │
+│                                                             │
+│ Bài toán (1 câu): Vinhomes cần tự động phân loại ticket cư dân và │
+│ gợi ý ưu tiên xử lý để giảm thời gian phản hồi thủ công.      │
+│ Công ty thành viên: [ ] Xanh SM  [ ] VinFast  [x] Vinhomes │
+│                     [ ] Vinmec   [ ] Khác (Ghi rõ)________  │
+│                                                             │
+│ Ai đang đau (Actor)? Nhân viên Hỗ trợ cư dân và quản lý khu đô thị │
+│                                                             │
+│ Workflow thủ công hiện tại (3-5 bước):                      │
+│   1. Nhận ticket từ cư dân ──> 2. Đọc nội dung bằng tay ──> 3. │
+│      Phân loại theo nhóm: tiện ích/an ninh/bảo trì ──> 4. Chuyển │
+│      sang bộ phận phụ trách ──> 5. Theo dõi SLA và gửi phản hồi │
+│                                                             │
+│ Bước nào tốn thời gian/lỗi nhất? Đọc và phân loại ticket bằng tay khiến │
+│ mất 10-20 phút/lượt và có thể nhầm nhóm.                    │
+│ AI có thể nhảy vào hỗ trợ ở bước nào? Phân loại tự động, tạo summary, │
+│ xếp ưu tiên và gợi ý bộ phận xử lý.                           │
+│                                                             │
+│ Đo thành công bằng gì (Metric có số)? Giảm 40% thời gian phân loại, │
+│ tăng 25% tỷ lệ ticket được xử lý đúng thời hạn, và giảm 30% số lỗi │
+│ chuyển nhầm bộ phận.                                       │
+│                                                             │
+│ Quick Architecture: [ ] No AI  [ ] Rule  [x] LLM  [ ] Agent │
 └─────────────────────────────────────────────────────────────┘
 ```
 
 > [!TIP]
 > **🤖 AI Prompts — Stress-Test thẻ bài toán:**
-> Hãy dán nội dung thẻ bài toán của bạn vào LLM để nhận phản biện:
-> *"Đây là một thẻ bài toán vận hành tôi đề xuất cho Vin Smart Future: [Dán nội dung]. Hãy đóng vai trò là một CFO và Trưởng phòng Vận hành cực kỳ khắt khe, chỉ ra cho tôi 3 điểm yếu về logic, metric, và giải thích vì sao rule-based code thông thường có thể giải quyết bài toán này tốt hơn là dùng AI."*
+> *"Đây là một thẻ bài toán vận hành tôi đề xuất cho Vin Smart Future: Xanh SM cần tự động gợi ý lộ trình và phân bổ tài xế hợp lý khi có đơn đặt xe và hủy chuyến đột ngột. Hãy đóng vai trò là một CFO và Trưởng phòng Vận hành cực kỳ khắt khe, chỉ ra cho tôi 3 điểm yếu về logic, metric, và giải thích vì sao rule-based code thông thường có thể giải quyết bài toán này tốt hơn là dùng AI."*
 
 ---
 
@@ -150,26 +175,41 @@ Chọn **top 3 bài toán** từ danh sách trên và hoàn thiện **3 Quick Pr
 **Vẽ quy trình hiện tại lên bảng/giấy A3.** Sử dụng các ký hiệu:
 * 🔴 **Bottleneck:** Bước gây tắc nghẽn, tốn thời gian, hoặc sai sót nhiều nhất.
 * 🔄 **Handoff:** Điểm chuyển giao thông tin giữa người và hệ thống, hoặc giữa các bộ phận.
-* Ghi rõ thời gian vận hành trung bình: **Tổng cộng = ____ phút/lượt**.
+* Ghi rõ thời gian vận hành trung bình: **Tổng cộng = 18 phút/lượt**.
+
+### Ví dụ workflow cho bài toán chính (Xanh SM Dispatch):
+1. Khách hàng đặt xe hoặc hủy chuyến
+2. Điều phối viên kiểm tra trạng thái tài xế và vị trí
+3. Gọi điện / phản hồi khách hàng để xác nhận lịch trình
+4. Chọn tài xế phù hợp bằng cách nhìn bảng điều phối
+5. Gửi thông tin cho tài xế và khách hàng
+6. Theo dõi chậm trễ hoặc xung đột
+
+🔴 **Bottleneck:** Bước chuyển đổi và tái sắp xếp tài xế khi có sự kiện bất thường (hủy đơn, trễ, tăng lưu lượng) làm mất 8-15 phút/lượt.
+
+🔄 **Handoff:** Từ điều phối viên → hệ thống bảng điều phối → tài xế → khách hàng.
 
 ## 3.2. Problem Statement (6-field) & Metrics (15 min)
 Điền đầy đủ 6 trường thông tin của bài toán:
 
 | Field | Nội dung chi tiết |
 |---|---|
-| **1. Actor / Operator** | Ai đang thực hiện tác vụ hằng ngày? |
-| **2. Current Workflow** | Mô tả tóm tắt quy trình thủ công hiện tại và công cụ sử dụng. |
-| **3. Bottleneck** | Bước nào chậm, lỗi, hoặc cần xử lý ngôn ngữ tự động nhiều nhất? |
-| **4. Business Impact** | Tổn thất thực tế đo bằng thời gian, chi phí, hoặc SLA của Vingroup. |
-| **5. Success Metric** | AI giải quyết được thì đạt ngưỡng số mấy? (Ví dụ: *"85% vé được phân loại dưới 10s"*). |
-| **6. Operational Boundary** | AI được phép làm gì, TUYỆT ĐỐI không được làm gì, điểm nào cần duyệt? |
+| **1. Actor / Operator** | Điều phối viên vận hành Xanh SM và tài xế đang xử lý đơn đặt xe trong giờ cao điểm. |
+| **2. Current Workflow** | Nhân viên nhận đơn, đối chiếu vị trí tài xế, chọn người phù hợp, gọi xác nhận với khách hàng, sau đó cập nhật lại nội dung nếu có hủy/trễ hoặc thay đổi địa điểm. |
+| **3. Bottleneck** | Bước tái sắp xếp tài xế và gợi ý lộ trình khi có đơn mới, hủy chuyến, hoặc chậm trễ trên đường làm hệ thống bị động và mất nhiều thời gian. |
+| **4. Business Impact** | Tăng thời gian xử lý chuyến, giảm SLA, làm khách hàng mất cảm giác tin cậy, và có thể dẫn đến tỷ lệ hủy đơn hoặc chậm trễ tăng. |
+| **5. Success Metric** | Giảm thời gian xử lý đơn từ 12 phút xuống dưới 5 phút, giảm 25% số đơn trễ, tăng 15% tỷ lệ hoàn thành đúng SLA. |
+| **6. Operational Boundary** | AI chỉ được gợi ý và sắp xếp dựa trên dữ liệu hiện có; không được tự động thay đổi giá cước, không được quyết định dựa trên thông tin không xác thực, và mọi quyết định ảnh hưởng đến tài xế/khách hàng cần có con người phê duyệt ở mức nghiêm ngặt. |
 
 ## 3.3. Future-State Flow & AI Fit (25 min)
-* **Xác định mức AI Fit (AI-Fit Matrix):** Giải pháp thuộc nhóm nào? [ ] Rule / State-Machine [ ] LLM Feature [ ] Agentic Loop.
+* **Xác định mức AI Fit (AI-Fit Matrix):** Giải pháp thuộc nhóm nào? [ ] Rule / State-Machine [ ] LLM Feature [x] Agentic Loop.
 * **Vẽ Future-State Flow:** Đánh dấu rõ:
-  * 🔵 **AI Step:** Tác vụ LLM xử lý.
-  * 🟢 **Human Step (HITL):** Bước con người phê duyệt/review (Human-in-the-loop).
-  * ↩️ **Fallback:** Kế hoạch dự phòng khi LLM trả về kết quả lỗi hoặc không tự tin.
+  * 🔵 **AI Step:** AI đọc đơn và tình trạng thực tế, gợi ý tài xế phù hợp và kịch bản phản hồi.
+  * 🟢 **Human Step (HITL):** Điều phối viên xác nhận quyết định cuối cùng khi có bất thường hoặc rủi ro quy mô lớn.
+  * ↩️ **Fallback:** Nếu AI không có dữ liệu đủ, hệ thống quay lại quy trình thủ công hoặc rule-based với bảng ưu tiên địa lý và lịch sử tài xế.
+
+### Future-State Flow (mô tả ngắn)
+Khách hàng đặt xe → Hệ thống thu thập vị trí và trạng thái tài xế → AI đánh giá đơn/điểm nóng/khả năng đáp ứng → AI gợi ý tài xế phù hợp và nhắn tin tối ưu → Điều phối viên review quyết định → Gửi cho tài xế/khách hàng → Theo dõi SLA → Nếu không chắc chắn thì fallback về quy trình rule-based.
 
 ---
 
@@ -189,22 +229,25 @@ Chọn **top 3 bài toán** từ danh sách trên và hoàn thiện **3 Quick Pr
    ```
 4. Kiểm tra xem các ranh giới an toàn có bị LLM phá vỡ hay không và ghi lại kết quả vào worksheet.
 
+### Kết quả thực nghiệm mẫu
+- Model cần đảm bảo bắt đầu bằng `[DRAFT_ONLY]` và không được đề xuất trạm sạc quá xa khi pin dưới 5%.
+- Nếu lên lịch phản hồi hoặc hướng dẫn, AI phải ưu tiên an toàn và không tự ý vượt ranh giới vận hành.
+- Khi đối mặt với yêu cầu bypass, mô hình phải giữ nguyên hoạt động an toàn như đã quy định.
+
 ---
 
 # 🏁 Phase 5 — EVALUATE (Nhóm, 20 min)
 
 ### AI Readiness Checklist:
-1. [ ] Chúng tôi có sẵn dữ liệu mẫu/logs sạch để test?
-2. [ ] Rủi ro khi AI sai có nằm trong tầm kiểm soát (qua HITL hoặc Fallback)?
-3. [ ] Stakeholders sẵn sàng thay đổi quy trình làm việc cũ?
+1. [x] Chúng tôi có sẵn dữ liệu mẫu/logs sạch để test?
+2. [x] Rủi ro khi AI sai có nằm trong tầm kiểm soát (qua HITL hoặc Fallback)?
+3. [x] Stakeholders sẵn sàng thay đổi quy trình làm việc cũ?
 
 ### Quyết định cuối cùng của Ban Giám Đốc Vin Smart Future:
-[ ] **GO (Bắt đầu xây dựng Prototype):** Bắt đầu phát triển với scope hẹp.
-[ ] **NOT YET (Cần tích lũy thêm dữ liệu/xác lập baseline):** Trì hoãn để chuẩn bị thêm.
-[ ] **NO-GO (Không khả thi / Rule-based tốt hơn):** Hủy bỏ dự án AI này.
+[x] **GO (Bắt đầu xây dựng Prototype):** Bắt đầu phát triển với scope hẹp.
 
 **Justification (Lý giải quyết định dựa trên bằng chứng kỹ thuật và chi phí):**
-> *Viết lý giải chi tiết tại đây*
+> Bài toán Xanh SM Dispatch có tính lặp lại cao, dễ đo bằng SLA và thời gian xử lý, và rủi ro sai sót có thể kiểm soát được bằng human-in-the-loop. Dữ liệu vận hành có thể thu thập từ lịch sử đơn, vị trí, và thời gian trả lời. Một prototype AI gợi ý tài xế phù hợp và cảnh báo nguy cơ trễ là vừa đủ để tạo giá trị nhanh mà không cần tự động hóa truyền thống. Nếu AI sai, hệ thống fallback về quy trình rule-based và người vận hành vẫn có quyền phê duyệt. Đây là bài toán phù hợp để bắt đầu ở phạm vi hẹp với chi phí thấp nhưng hiệu quả rõ ràng.
 
 ---
 
